@@ -8,6 +8,7 @@ from tkinter.filedialog import askdirectory
 TITLE_LABEL = "#TITLE:"
 MV_LABEL = "[MV]"
 DEFAULT_ENCODING = "utf8"
+VIDEO_FILE_EXTENSIONS = (".avi", ".mpeg", ".mpg", ".mp4")
 
 
 def get_title(sim_file_lines):
@@ -20,7 +21,7 @@ def has_video_file(simfolder):
     for rootPath, dirs, filenames in os.walk(simfolder):
         for fileName in filenames:
             # lower() -> case insensitive so e.g. ".MPG" is also found
-            if fileName.lower().endswith((".avi", ".mpeg", ".mpg")):
+            if fileName.lower().endswith(VIDEO_FILE_EXTENSIONS):
                 # video file exists
                 # print(f"Video: {os.path.join(rootPath, fileName)}")
                 return True
@@ -32,7 +33,7 @@ def update_simfile_with_mv_label(simfile_path, f_lines, title):
     with open(simfile_path, 'w', encoding=DEFAULT_ENCODING) as f:
         for f_line in f_lines:
             if TITLE_LABEL in f_line:
-                f.writelines(f"{TITLE_LABEL}{title} {MV_LABEL};")
+                f.writelines(f"{TITLE_LABEL}{title} {MV_LABEL};\n")
             else:
                 f.writelines(f_line)
 
@@ -42,7 +43,7 @@ def remove_label_from_simfile(simfile_path, f_lines, title):
         for f_line in f_lines:
             if TITLE_LABEL in f_line:
                 title_without_label = title.replace(f" {MV_LABEL}", '')
-                f.writelines(f"{TITLE_LABEL}{title_without_label};")
+                f.writelines(f"{TITLE_LABEL}{title_without_label};\n")
             else:
                 f.writelines(f_line)
 
@@ -80,7 +81,7 @@ def main():
                 if MV_LABEL not in simtitle:
                     update_simfile_with_mv_label(simfilePath, simfile_lines, simtitle)
                     updated_simfile_mv_label_count += 1
-                    print(f"'{MV_LABEL}' added to '{simtitle}")
+                    print(f"'{MV_LABEL}' added to '{simtitle}'")
                 # else:
                 #     print(f"'{simtitle}' already has MV label")
                 # print(f"Video in: {simtitle}")
@@ -88,6 +89,7 @@ def main():
                 if MV_LABEL in simtitle:
                     remove_label_from_simfile(simfilePath, simfile_lines, simtitle)
                     removed_label_simfile_count += 1
+                    print(f"'{MV_LABEL}' removed from '{simtitle}'")
         except UnicodeDecodeError:
             # in case of this exception: open file and save again in utf-8 encoding
             logging.error(f"Could not open {simfile.name} (change encoding to utf-8!)")
@@ -98,6 +100,7 @@ def main():
     print(f"{simfile_with_video_file_count} simfiles with video files found")
     print(f"Added '{MV_LABEL}' to title of {updated_simfile_mv_label_count} simfiles")
     print(f"Removed '{MV_LABEL}' from title of {removed_label_simfile_count} simfiles")
+    input("Press enter to exit")
 
 
 main()
