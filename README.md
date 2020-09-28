@@ -19,7 +19,8 @@ Click on `Select Folder`, and the script will start running immediatly.
 Click on `Cancel` to abort the script.  
 [![example output](docs/example_output.png?raw=true "Example output")](#)  
 ## Details
-Only chart files with the file extension `.sm` and `.ssc` are searched for and possibly edited. If any file with the file extension `.avi`, `.mpeg`, `.mpg` or `.mp4` (case-insensitive) is found in the same folder as the chart file, it is assumed that the simfile has a background video.
+Only chart files with the file extension `.sm` and `.ssc` are searched for and possibly edited. 
+If any file with the file extension `.avi`, `.mpeg`, `.mpg` or `.mp4` (case-insensitive) is found in the same folder as the chart file, it is assumed that the simfile has a background video.
 ## Errors
 All problems listed here can occur for each found simfile. The affected simfile is then skipped, and the process continues.
 1. `No title found in file {simfilePath}`
