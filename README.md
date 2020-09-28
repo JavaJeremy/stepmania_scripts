@@ -7,7 +7,7 @@ You can download it [here](https://www.python.org/downloads/), make sure you hav
 Then you can execute the scripts by opening them with `python.exe`.  
 [![example script file](docs/example_script_file.png)](#)  
 
-# #1 label_mv.py
+# #1 [label_mv.py](label_mv.py)
 ## What it does  
 [![example result](docs/example_results.png)](#)  
 1. Adds "[MV]" to all chart titles that have a background video.  
