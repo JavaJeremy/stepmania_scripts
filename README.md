@@ -17,6 +17,7 @@ Select the any folder that has simfiles. It can be a single simfile folder, a co
 [![Folder selection](docs/folder_selection.png?raw=true)](#)  
 Click on `Select Folder`, and the script will start running immediatly.  
 Click on `Cancel` to abort the script.  
+A successful run could look something like this:  
 [![example output](docs/example_output.png?raw=true "Example output")](#)  
 ## Details
 Only chart files with the file extension `.sm` and `.ssc` are searched for and possibly edited.  
