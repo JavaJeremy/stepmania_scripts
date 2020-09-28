@@ -24,8 +24,8 @@ If any file with the file extension `.avi`, `.mpeg`, `.mpg` or `.mp4` (case-inse
 ## Errors
 All problems listed here can occur for each found simfile. The affected simfile is then skipped, and the process continues.
 1. `No title found in file {simfilePath}`  
-Pretty self-explanatory I believe, just give your title in your chart a value.  
 [![Missing title](docs/missing_title.png?raw=true)](#)  
+Pretty self-explanatory I believe, just give your title in your chart a value.  
 1. `Could not open {simfile.name} (change encoding to utf-8!)`  
 You can find that file and change the encoding to UTF8 to fix this issue.  
 Here's an example of how to do it with the Win10 editor (on the bottom right you can see what encoding the file is currently in):
