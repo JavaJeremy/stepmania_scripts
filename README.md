@@ -3,7 +3,7 @@ Scripts to use for editing multiple simfiles at once.
 # How to execute a script :rocket:
 You need Python in order to execute a script.
 You can download it [here](https://www.python.org/downloads/), make sure you have at least version 3.8.0.  
-![python_download](docs/python_download.png?raw=true)  
+[![python_download](docs/python_download.png?raw=true)](#)
 Then you can execute the scripts by opening them with `python.exe`.  
 ![example script file](docs/example_script_file.png?raw=true) 
 
