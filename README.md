@@ -1,5 +1,5 @@
 # Stepmania Scripts
-Scripts to use for editing multiple simfiles at once.
+Scripts to use for editing multiple simfiles at once. Only tested on Win10.
 # How to execute a script :rocket:
 You need Python in order to execute a script.
 You can download it [here](https://www.python.org/downloads/), make sure you have at least version 3.8.0.  
