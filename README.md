@@ -11,7 +11,7 @@ Then you can execute the scripts by opening them with `python.exe`.
 ## What it does  
 [![example result](docs/example_results.png)](#)  
 1. Adds "[MV]" to all chart titles that have a background video.  
-2. Removes "[MV]" from all chart titles (if it exists) that do not have a background video.  
+2. Removes "[MV]" from all chart titles that do not have a background video.  
 ## Usage
 Select the any folder that has simfiles. It can be a single simfile folder, a collection or the entire Stepmania `Songs` folder:
 [![Folder selection](docs/folder_selection.png)](#)  
