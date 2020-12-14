@@ -1,9 +1,9 @@
 import glob
-import os
 import re  # RegEx
 import logging
 import tkinter as tk
 from tkinter.filedialog import askdirectory
+from shared_constants import *
 
 TITLE_LABEL = "#TITLE:"
 MV_LABEL = "[MV]"

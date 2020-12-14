@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter.filedialog import askdirectory
-import os
 import glob
 import shutil
 from pathlib import Path
 import re  # RegEx
+from shared_constants import *
+from shared_methods import has_video_file
 
 
 def folder_selection():
@@ -36,35 +37,22 @@ def get_chart_files(search_folder):
     return chart_list
 
 
-def has_video_file(simfile):
-    video_file_extensions = (".avi", ".mpeg", ".mpg", ".mp4")
-    for rootPath, dirs, filenames in os.walk(simfile):
-        for fileName in filenames:
-            # lower() -> case insensitive so e.g. ".MPG" is also found
-            if fileName.lower().endswith(video_file_extensions):
-                # video file exists
-                # print(f"Video: {os.path.join(rootPath, fileName)}")
-                return True
-        break  # prevent descending into subfolders
-    return False
-
-
 def main():
     simfile_with_video_file_count = 0
     origin_dir = ""
     search_folder, move_folder = folder_selection()
     chart_files = get_chart_files(search_folder)
-    for chart_file in chart_files:
+    for chart_file_path in chart_files:
         try:
-            simfile = os.path.dirname(chart_file)
+            simfile = os.path.dirname(chart_file_path)
             # if simfile is already in music video folder, skip
-            if os.path.dirname(simfile) in move_folder:
+            if os.path.dirname(chart_file_path) in move_folder:
                 continue
             # check if video file exists in simfile
-            if has_video_file(simfile):
+            if has_video_file(simfile, VIDEO_FILE_EXTENSIONS):
                 # move to music video folder
                 # if it was already moved on the previous loop skip
-                # this can happen when there're two chart files in one simfile
+                # this can happen when there are two chart files in one simfile
                 if origin_dir == simfile:
                     continue
                 origin_dir = simfile

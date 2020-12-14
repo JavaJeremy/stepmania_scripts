@@ -1,32 +1,16 @@
 import glob
-import os
 import re  # RegEx
 import logging
 import tkinter as tk
 from tkinter.filedialog import askdirectory
-
-TITLE_LABEL = "#TITLE:"
-MV_LABEL = "[MV]"
-DEFAULT_ENCODING = "utf8"
-VIDEO_FILE_EXTENSIONS = (".avi", ".mpeg", ".mpg", ".mp4")
+from shared_constants import *
+from shared_methods import has_video_file
 
 
 def get_title(sim_file_lines):
     for line in sim_file_lines:
         if TITLE_LABEL in line:
             return re.findall(f'{TITLE_LABEL}(.*?);', line, re.DOTALL)[0]
-
-
-def has_video_file(simfolder):
-    for rootPath, dirs, filenames in os.walk(simfolder):
-        for fileName in filenames:
-            # lower() -> case insensitive so e.g. ".MPG" is also found
-            if fileName.lower().endswith(VIDEO_FILE_EXTENSIONS):
-                # video file exists
-                # print(f"Video: {os.path.join(rootPath, fileName)}")
-                return True
-        break  # prevent descending into subfolders
-    return False
 
 
 def update_simfile_with_mv_label(simfile_path, f_lines, title):
@@ -85,7 +69,7 @@ def main():
             if simtitle == "" or simtitle is None:
                 print(f"No title found in file {simfilePath}")
                 continue
-            if has_video_file(simfile_folder):
+            if has_video_file(simfile_folder, VIDEO_FILE_EXTENSIONS):
                 simfile_with_video_file_count += 1
                 if MV_LABEL not in simtitle:
                     update_simfile_with_mv_label(simfilePath, simfile_lines, simtitle)
