@@ -1,0 +1,3 @@
+[submodule "stepmania_mv_splitter"]
+	path = stepmania_mv_splitter
+	url = ./stepmania_mv_splitter
