@@ -1,27 +1,57 @@
+import tkinter as tk
+from tkinter.filedialog import askdirectory
 import os
+import logging
 from shared_constants import *
-from shared_methods import get_folder
+from shared_methods import get_files_of_type, get_steps_title
+
+
+def get_folder():
+    # select folder
+    root = tk.Tk()
+    root.withdraw()
+    path_to_folder = askdirectory(title='Select Folder')
+    if path_to_folder == "":
+        raise Exception("No folder selected, quitting")
+    print(f"Folder: {path_to_folder}")
+    return path_to_folder
 
 
 def main():
     """
-    Creates simfile folder with empty template files and some basic infos in the .ssc file
+    Completes simfile folder by adding missing files (empty templates) and properties in the step file
     """
     try:
         # get necessary data
-        parent_dir = get_folder()
-        song_name = input('Song name:')
+        simfile_path = get_folder()
+        # simfile = os.path.dirname(chart_file_path)
+        step_file = get_files_of_type(simfile_path, STEP_FILE_EXTENSIONS)[0]
+        try:
+            simfile = open(simfile_path + "/" + step_file, 'r', encoding=DEFAULT_ENCODING)
+            simfile_lines = simfile.readlines()
+            simtitle = get_steps_title(simfile_lines)
+            if simtitle == "" or simtitle is None:
+                print(f"No title found in file {simfile_path}")
+                # TODO: DELETE AND CREATE STEP FILE BECAUSE SOMETHING IS BROKEN HERE
+        except UnicodeDecodeError:
+            # in case of this exception: open file and save again in utf-8 encoding
+            print(f"Could not open {simfile.name} (change encoding to utf-8!)")
+        except IndexError:
+            print(f"Could not extract title from {simfile.name}")
+        except PermissionError:
+            print(f"Not allowed to open {simfile.name} - try as Admin!")
+        song_name = simtitle if simtitle else input('Song name:')
+        #TODO bis hier gekommen - hier gehts weiter...
         song_subtitle = input('Subtitle (optional):')
         artist_name = input('Artist name:')
         simfile_creator = input('Simfile creator (optional):')
         # logging
-        if not song_subtitle:
-            print(f"{song_name} by {artist_name}")
-        else:
-            print(f"{song_name} ({song_subtitle}) by {artist_name}")
+        # if not song_subtitle:
+        #     print(f"{song_name} by {artist_name}")
+        # else:
+        #     print(f"{song_name} ({song_subtitle}) by {artist_name}")
         # create simfile
-        simfile_path = os.path.join(parent_dir, song_name)
-        os.mkdir(simfile_path)
+        # os.mkdir(simfile_path)
         # create empty files for simfile
         chart_file_name = f"{song_name}.ssc"
         music_file_name = f"{song_name}.ogg"

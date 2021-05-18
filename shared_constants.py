@@ -1,5 +1,3 @@
-import os
-
 TITLE_LABEL = "#TITLE:"
 SUBTITLE_LABEL = "#SUBTITLE:"
 ARTIST_LABEL = "#ARTIST:"
@@ -12,3 +10,4 @@ BGCHANGES_LABEL = "#BGCHANGES:"
 MV_LABEL = "[MV]"
 DEFAULT_ENCODING = "utf8"
 VIDEO_FILE_EXTENSIONS = (".avi", ".mpeg", ".mpg", ".mp4")
+STEP_FILE_EXTENSIONS = (".ssc", ".sm")

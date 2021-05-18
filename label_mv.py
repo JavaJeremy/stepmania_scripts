@@ -1,16 +1,8 @@
 import glob
-import re  # RegEx
+import os
 import logging
-import tkinter as tk
-from tkinter.filedialog import askdirectory
 from shared_constants import *
-from shared_methods import has_video_file
-
-
-def get_title(sim_file_lines):
-    for line in sim_file_lines:
-        if TITLE_LABEL in line:
-            return re.findall(f'{TITLE_LABEL}(.*?);', line, re.DOTALL)[0]
+from shared_methods import has_file_of_type, get_steps_title, get_folder
 
 
 def update_simfile_with_mv_label(simfile_path, f_lines, title):
@@ -43,33 +35,28 @@ def remove_label_from_simfile(simfile_path, f_lines, title):
 
 def main():
     # select folder
-    root = tk.Tk()
-    root.withdraw()
-    path_to_folder = askdirectory(title='Select Folder')
-    if path_to_folder == "":
-        print("No folder selected, quitting")
-        return
-    print(f"Root folder: {path_to_folder}")
+    path_to_folder = get_folder()
     # find simfiles
     os.chdir(path_to_folder)  # set default folder for glob search
+    simfile_path_list = glob.glob("**/*.ssc", recursive=True) + glob.glob("**/*.sm", recursive=True)
+
     simfile_count = 0
     simfile_with_video_file_count = 0
     updated_simfile_mv_label_count = 0
     removed_label_simfile_count = 0
-    simfile_path_list = glob.glob("**/*.ssc", recursive=True) + glob.glob("**/*.sm", recursive=True)
 
     for simfilePath in simfile_path_list:
         # check if video file exists in folder of simfile
         simfile_folder = os.path.dirname(simfilePath)
-        # print(f"Simfolder: {simfileFolder}")
+        # print(f"Simfolder: {simfile_folder}")
         simfile = open(simfilePath, 'r', encoding=DEFAULT_ENCODING)
         try:
             simfile_lines = simfile.readlines()
-            simtitle = get_title(simfile_lines)
+            simtitle = get_steps_title(simfile_lines)
             if simtitle == "" or simtitle is None:
                 print(f"No title found in file {simfilePath}")
                 continue
-            if has_video_file(simfile_folder, VIDEO_FILE_EXTENSIONS):
+            if has_file_of_type(simfile_folder, VIDEO_FILE_EXTENSIONS):
                 simfile_with_video_file_count += 1
                 if MV_LABEL not in simtitle:
                     update_simfile_with_mv_label(simfilePath, simfile_lines, simtitle)
